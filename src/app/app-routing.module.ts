@@ -7,10 +7,20 @@ import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent, pathMatch: 'full' },
-  { path: 'welcome/settings', component: SettingsComponent, pathMatch: 'full' },
+  {
+    path: 'welcome/settings',
+    loadChildren: () =>
+      import(/* webpackChunkName: "settings" */ './settings/settings.module').then(
+        (m) => m.SettingsModule
+      ),
+    pathMatch: 'full',
+  },
   {
     path: 'welcome/settings/profile',
-    component: ProfileComponent,
+    loadChildren: () =>
+      import(/* webpackChunkName: "profile" */ './profile/profile.module').then(
+        (m) => m.ProfileModule
+      ),
     pathMatch: 'full',
   },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
